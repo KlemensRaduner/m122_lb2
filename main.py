@@ -38,7 +38,9 @@ def moveFiles():
                           os.path.join(save.dir, name+extension))
                 moved += 1
     if moved:
-        toaster.show_toast("LB2", str(moved) + " files moved")
+        toaster.show_toast("LB2", str(moved) +
+                           " files moved", icon_path="icon.ico", duration=5,
+                           threaded=True)
 
 
 moveFiles()
