@@ -3,7 +3,7 @@ import threading
 from win10toast import ToastNotifier
 
 
-class Save:
+class Save:  # stores the assignments of directory to filextensions
     def __init__(self, dir, extensions):
         self.dir = dir
         self.extensions = extensions
@@ -12,18 +12,24 @@ class Save:
         return e in self.extensions
 
 
+# initalize toaster
 toaster = ToastNotifier()
+
+# get path to download folder
 home = os.path.expanduser('~')
 location = os.path.join(home, 'Downloads')
 folder_check = os.path.isdir(location)
-if folder_check == False:
+if folder_check == False:  # exit if downloads folder does not exist
     quit("no downloads folder")
 
+# read file with the assignments and store them in "saves"
 f = open("./assignments.lb2", "r")
 saves = []
 for line in f:
     args = line.split()
     saves.append(Save(args[0], args[1:]))
+
+# moves files
 
 
 def moveFiles():
@@ -37,6 +43,7 @@ def moveFiles():
                 os.rename(os.path.join(location, file),
                           os.path.join(save.dir, name+extension))
                 moved += 1
+    # show toast if any files moved
     if moved:
         toaster.show_toast("LB2", str(moved) +
                            " files moved", icon_path="icon.ico", duration=5,
