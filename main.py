@@ -29,10 +29,8 @@ for line in f:
     args = line.split()
     saves.append(Save(args[0], args[1:]))
 
-# moves files
 
-
-def moveFiles():
+def moveFiles():  # moves files
     threading.Timer(1.0, moveFiles).start()
     files = os.listdir(location)
     moved = 0
