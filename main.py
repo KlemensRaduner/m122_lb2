@@ -1,19 +1,28 @@
 import os
-from save import Save
+import threading
 from win10toast import ToastNotifier
-import inotify.adapters
 
+
+class Save:  # stores the assignments of directory to filextensions
+    def __init__(self, dir, extensions):
+        self.dir = dir
+        self.extensions = extensions
+
+    def hasExtension(self, e):
+        return e in self.extensions
+
+
+# initalize toaster
 toaster = ToastNotifier()
 
+# get path to download folder
 home = os.path.expanduser('~')
 location = os.path.join(home, 'Downloads')
 folder_check = os.path.isdir(location)
-if folder_check == False:
+if folder_check == False:  # exit if downloads folder does not exist
     quit("no downloads folder")
 
-notifier = inotify.adapters.Inotify()
-notifier.add_watch(location)
-
+# read file with the assignments and store them in "saves"
 f = open("./assignments.lb2", "r")
 saves = []
 for line in f:
@@ -21,8 +30,22 @@ for line in f:
     saves.append(Save(args[0], args[1:]))
 
 
-for event in notifier.event_gen(yield_nones=False):
-    (_, type_names, path, filename) = event
+def moveFiles():  # moves files
+    threading.Timer(1.0, moveFiles).start()
+    files = os.listdir(location)
+    moved = 0
+    for file in files:
+        name, extension = os.path.splitext(file)
+        for save in saves:
+            if save.hasExtension(extension):
+                os.rename(os.path.join(location, file),
+                          os.path.join(save.dir, name+extension))
+                moved += 1
+    # show toast if any files moved
+    if moved:
+        toaster.show_toast("LB2", str(moved) +
+                           " files moved", icon_path="icon.ico", duration=5,
+                           threaded=True)
 
-    print("PATH=[{}] FILENAME=[{}] EVENT_TYPES={}".format(
-        path, filename, type_names))
+
+moveFiles()
