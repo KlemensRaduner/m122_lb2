@@ -20,4 +20,3 @@ for file in files:
         if save.hasExtension(extension):
             os.rename(os.path.join(location, file),
                       os.path.join(save.dir, name+extension))
-
