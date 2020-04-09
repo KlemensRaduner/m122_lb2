@@ -28,7 +28,8 @@ f = open("./assignments.txt", "r")
 saves = []
 for line in f:
     args = line.split()
-    saves.append(Save(args[0], args[1:]))
+    if os.path.isdir(args[0]):
+        saves.append(Save(args[0], args[1:]))
 
 
 def moveFiles():  # moves files
