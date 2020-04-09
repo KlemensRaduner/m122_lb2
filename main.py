@@ -4,22 +4,6 @@ from win10toast import ToastNotifier
 from infi.systray import SysTrayIcon
 
 
-def edit_options(systray):  # edit options
-    os.system("notepad.exe assignments.txt")
-
-
-def on_quit_callback(systray):  # quit
-    exit()
-
-
-# adding menuoptions to systray
-menu_options = (("Edit options", None, edit_options),)
-
-systray = SysTrayIcon("icon.ico", "File mover",
-                      menu_options, on_quit=on_quit_callback)
-systray.start()
-
-
 class Save:  # stores the assignments of directory to filextensions
     def __init__(self, dir, extensions):
         self.dir = dir
@@ -66,3 +50,19 @@ def moveFiles():  # moves files
 
 
 moveFiles()
+
+
+def edit_options(systray):  # edit options
+    os.system("notepad.exe assignments.txt")
+
+
+def on_quit_callback(systray):  # quit
+    exit()
+
+
+# adding menuoptions to systray
+menu_options = (("Edit options", None, edit_options),)
+
+systray = SysTrayIcon("icon.ico", "File mover",
+                      menu_options, on_quit=on_quit_callback)
+systray.start()
