@@ -55,7 +55,7 @@ moveFiles()
 
 
 def edit_options(systray):  # edit options
-    os.system("notepad.exe assignments.txt")
+    os.system("start assignments.txt")
 
 
 def on_quit_callback(systray):  # quit
