@@ -1,6 +1,22 @@
 import os
 import threading
 from win10toast import ToastNotifier
+from infi.systray import SysTrayIcon
+
+
+def edit_options(systray):
+    os.system("notepad.exe assignments.txt")
+
+
+def on_quit_callback(systray):
+    exit()
+
+
+menu_options = (("Edit options", None, edit_options),)
+
+systray = SysTrayIcon("icon.ico", "File mover",
+                      menu_options, on_quit=on_quit_callback)
+systray.start()
 
 
 class Save:  # stores the assignments of directory to filextensions
@@ -23,7 +39,7 @@ if folder_check == False:  # exit if downloads folder does not exist
     quit("no downloads folder")
 
 # read file with the assignments and store them in "saves"
-f = open("./assignments.lb2", "r")
+f = open("./assignments.txt", "r")
 saves = []
 for line in f:
     args = line.split()
@@ -44,7 +60,7 @@ def moveFiles():  # moves files
     # show toast if any files moved
     if moved:
         toaster.show_toast("LB2", str(moved) +
-                           " files moved", icon_path="icon.ico", duration=5,
+                           "files moved", icon_path="icon.ico", duration=5,
                            threaded=True)
 
 
