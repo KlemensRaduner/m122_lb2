@@ -5,7 +5,7 @@
 
 
 #project
-*.lb2
+assignments.txt
 
 # User-specific files
 *.rsuser
