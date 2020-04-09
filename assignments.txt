@@ -1,2 +1,2 @@
-C:\Users\kleme\OneDrive\Bilder .png .jpg
-C:\Users\kleme\Music .mp3
+C:\Users\danie\OneDrive\Bilder .png .jpeg .img
+C:\Users\danie\OneDrive\Dokumente .txt 
