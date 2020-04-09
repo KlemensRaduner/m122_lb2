@@ -45,7 +45,7 @@ def moveFiles():  # moves files
     # show toast if any files moved
     if moved:
         toaster.show_toast("LB2", str(moved) +
-                           "files moved", icon_path="icon.ico", duration=5,
+                           " files moved", icon_path="icon.ico", duration=5,
                            threaded=True)
 
 
