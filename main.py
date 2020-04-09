@@ -49,6 +49,7 @@ def moveFiles():  # moves files
                            threaded=True)
 
 
+# run programm
 moveFiles()
 
 
