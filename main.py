@@ -23,13 +23,18 @@ folder_check = os.path.isdir(location)
 if folder_check == False:  # exit if downloads folder does not exist
     quit("no downloads folder")
 
-# read file with the assignments and store them in "saves"
-f = open("./assignments.txt", "r")
+# initalize saves
 saves = []
-for line in f:
-    args = line.split()
-    if os.path.isdir(args[0]):
-        saves.append(Save(args[0], args[1:]))
+
+
+# read file with the assignments and store them in "saves"
+def readAssignments(systray=None):
+    f = open("./assignments.txt", "r")
+    saves = []
+    for line in f:
+        args = line.split()
+        if os.path.isdir(args[0]):
+            saves.append(Save(args[0], args[1:]))
 
 
 def moveFiles():  # moves files
@@ -50,21 +55,22 @@ def moveFiles():  # moves files
                            threaded=True)
 
 
-# run programm
-moveFiles()
-
-
-def edit_options(systray):  # edit options
+def edit_options(systray=None):  # edit options
     os.system("start assignments.txt")
 
 
-def on_quit_callback(systray):  # quit
+def on_quit_callback(systray=None):  # quit
     exit()
 
 
 # adding menuoptions to systray
-menu_options = (("Edit options", None, edit_options),)
+menu_options = (("Edit options", None, edit_options),
+                (("Reload", None, readAssignments)))
 
 systray = SysTrayIcon("icon.ico", "File mover",
                       menu_options, on_quit=on_quit_callback)
 systray.start()
+
+# run programm
+readAssignments()
+moveFiles()
